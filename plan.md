@@ -27,4 +27,9 @@ determine the winner.
   - dictionary feels more premanent, huh turns out you could use numbers as a key to a dictionary
   - so we can make a matrix with dictionary 
   - All in all I think we could use either which is tuff to say why one is better than the other
-  - 
+   
+- Player
+
+- Game
+
+- IO
