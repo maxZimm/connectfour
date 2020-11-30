@@ -1,3 +1,4 @@
+import os
 
 class GameIO():
 
@@ -6,15 +7,18 @@ class GameIO():
 
     def get_name(self):
         user_inp = input('Player Name: ').strip()
-        user_inp = self.nameValidation(user_inp)
+        user_inp = self.name_validation(user_inp)
         return user_inp
 
     def name_validation(self, name):
         if len(name) < 3:
             name = input('Name must be at least 3 letters: ').strip()
-            return self.nameValidation(name)
+            return self.name_validation(name)
         else:
             return name
+
+    def get_move(self):
+        pass
 
     def print_board(self, board):
         for row in board.state:
@@ -25,3 +29,5 @@ class GameIO():
                     print('|_|', end='')
             print('')
 
+    def cli_clrscrn(self):
+        os.system('clear')
