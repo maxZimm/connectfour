@@ -10,13 +10,23 @@ class Game:
         self.players = []
 
     def get_players(self):
-        for i in range(2):
-            self.players.append(Player(self.io.get_name()))  
+        for i in range(1,3):
+            self.players.append(Player(self.io.get_name(i)))  
 
-    def player_turn():
-        pass
+    def player_turn(self, player):
+        self.board.accept_move((player, self.io.get_move(player)))
 
-    def main():
+    def main(self):
         self.get_players()
-        # one round of player turns?
-        # then a while loop to keep the game going? Or just start the game and check for winner even though no turn has happend
+        turn = 0
+        while not self.board.check_winner():
+            self.io.cli_clrscrn()
+            self.io.print_board(self.board)
+            self.player_turn(self.players[turn % 2])
+            turn += 1
+        self.io.cli_clrscrn()
+        self.io.print_board(self.board)
+        print(f"Player {self.board.check_winner().name} wins!")
+
+if __name__ == '__main__':
+    Game().main()
