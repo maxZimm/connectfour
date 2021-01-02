@@ -18,7 +18,7 @@ class GameIO():
             return name
 
     def get_move(self, player):
-        inp = input(f'{player.name} select column 1 - 7: ')
+        inp = input(f'{player.name} select column 1 - 7: ').strip()
         inp = self.move_validation(inp, player)
         return inp
 

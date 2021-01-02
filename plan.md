@@ -29,7 +29,9 @@ determine the winner.
   - All in all I think we could use either which is tuff to say why one is better than the other
    
 - Player
-
+  - Doesn't have a whole lot to do that i can think of at the moment
+  - Holds a name so we can keep the two of em apart
+  - could hold a history of wins if we wanted
 - Game
 
 - IO
