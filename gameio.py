@@ -1,9 +1,12 @@
 import os
+import gui
 
 class GameIO():
 
-    def __init__(self):
-        pass
+    def __init__(self, viz):
+        self.viz = viz
+        if self.viz == 'y':
+            gui.Main()
 
     def get_name(self, i):
         user_inp = input(f'Player {i} Name: ').strip()

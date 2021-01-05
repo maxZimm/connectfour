@@ -1,17 +1,28 @@
 from board import Board
 from player import Player
 from gameio import GameIO
+import argparse
+
+parser = argparse.ArgumentParser(description='Gui Or CLI')
+parser.add_argument('-gui', '-g', nargs=1, default='y')
+args = parser.parse_args()
+gui = args.gui[0] if args.gui[0] == 'y' else 'n'
 
 class Game:
 
-    def __init__(self):
+    def __init__(self, gui):
         self.board = Board()
-        self.io = GameIO()
+        self.io = GameIO(gui)
+        self.gui = gui
         self.players = []
 
     def get_players(self):
-        for i in range(1,3):
-            self.players.append(Player(self.io.get_name(i)))  
+        if self.gui == 'y':
+            for i in range(1,3):
+                self.players.append(Player(f'Player {i}'))  
+        else:
+            for i in range(1,3):
+                self.players.append(Player(self.io.get_name(i)))  
 
     def player_turn(self, player):
         self.board.accept_move((player, self.io.get_move(player)))
@@ -29,4 +40,4 @@ class Game:
         print(f"Player {self.board.check_winner().name} wins!")
 
 if __name__ == '__main__':
-    Game().main()
+    Game(gui).main()
