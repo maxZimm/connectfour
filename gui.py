@@ -24,6 +24,19 @@ class Main():
                     pygame.quit()
                     sys.exit()
 
+            self.screen.fill(Main.BG)
             self.draw_brd()
             pygame.display.update()
             self.clock.tick(120)
+
+class Chip():
+
+    def __init__(self, player):
+        if player == 1:
+            self.chip = pygame.image.load('assets/bluechip.png').convert_alpha()
+            self.rect = self.chip.get_rect(center = (100,400))
+        elif player == 2:
+            self.chip = pygame.image.load('assets/redchip.png').convert_alpha()
+            self.rect = self.chip.get_rect(center = (900,400))
+        self.player = player
+        self.active = 1
