@@ -12,7 +12,7 @@ class Board():
          }
 
     def accept_move(self, move):
-        '''Move is tuple with 2 elments or is it? We only know about column and player
+        '''Move is tuple with 2 elments 
            index 0 is player index 1 is column'''    
         rows = list(range(6))
         rows.reverse()
