@@ -18,6 +18,8 @@ class Game:
         self.board_img = pygame.image.load('assets/cn4brd.png').convert_alpha()
         self.chips = []
         self.slots = []
+        self.p1_chip = pygame.image.load('assets/bluechip_disp.png').convert_alpha()
+        self.p2_chip = pygame.image.load('assets/redchip_disp.png').convert_alpha()
 
     def get_players(self):
         for i in range(1,3):
@@ -40,8 +42,15 @@ class Game:
                     self.chips.append(Chip(c.player, self.screen))
                     self.chips.remove(c)
 
+    def print_placed_chips(self):
+        for row in self.board.state:
+            for item in self.board.state[row]:
+                if self.board.state[row][item] == 1:
+                    self.screen.blit(self.p1_chip, ((item * 85 + 200),(row * 85 + 95)))
+                elif self.board.state[row][item] == 2:
+                    self.screen.blit(self.p2_chip, ((item * 85 + 200),(row * 85 + 95)))
+ 
     def main(self):
-        #self.get_players()
         turn = 0
         self.build_slots()
         while not self.board.check_winner():
@@ -53,18 +62,14 @@ class Game:
             self.screen.fill(Game.BG)
             for s in self.slots:
                 s.draw()
-            for c in self.chips:
-                c.move(self.slots)
+            self.print_placed_chips()
             self.screen.blit(self.board_img, (200,95))
+            for c in self.chips:
+                move = c.move(self.slots)
+                if move:
+                    self.board.accept_move(move)
             pygame.display.update()
             self.clock.tick(120)
-           # self.io.cli_clrscrn()
-           # self.io.print_board(self.board)
-           # self.player_turn(self.players[turn % 2])
-           # turn += 1
-       # self.io.cli_clrscrn()
-       # self.io.print_board(self.board)
-       # print(f"Player {self.board.check_winner().name} wins!")
 
 class Chip():
 
@@ -91,17 +96,21 @@ class Chip():
                 self.rect = self.chip.get_rect(center = mouse)
                 self.draw()
             else:
-                if not self.slot_col(ss):
+                move =  self.slot_col(ss)
+                if not move:
                     self.draw()
+                else:
+                    return move
 
     def slot_col(self, ss):
         mouse = pygame.mouse.get_pos()
         pressed = pygame.mouse.get_pressed()
         for s in ss:
             if s.rect.colliderect(self.rect) and pressed[0] == 0:
-                print(f'We got a hit on {s.ind}')
+                #print(f'We got a hit on {s.ind}')
                 self.active = 0
-                return True
+                return (self.player, s.ind)
+        return False
 
 class Slot():
 
@@ -116,3 +125,5 @@ class Slot():
 
 if __name__ == '__main__':
     Game().main()
+
+# Then probably need a textual representation of a win  
