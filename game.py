@@ -35,13 +35,17 @@ class Game:
     def build_chips(self):
         if not self.chips:
             self.chips.append(Chip(1, self.screen))
-            self.chips.append(Chip(2, self.screen))
         else:
             for c in self.chips:
                 if c.active == 0:
-                    self.chips.append(Chip(c.player, self.screen))
+                    self.chips.append(Chip(self.turn_determin(c.player), self.screen))
                     self.chips.remove(c)
 
+    def turn_determin(self, num):
+        if num % 2 == 1:
+            return 2
+        else:
+            return 1    
     def print_placed_chips(self):
         for row in self.board.state:
             for item in self.board.state[row]:
