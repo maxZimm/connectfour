@@ -20,6 +20,7 @@ class Game:
         self.slots = []
         self.p1_chip = pygame.image.load('assets/bluechip_disp.png').convert_alpha()
         self.p2_chip = pygame.image.load('assets/redchip_disp.png').convert_alpha()
+        self.game_font = pygame.font.Font('assets/Championship.ttf', 180)
 
     def get_players(self):
         for i in range(1,3):
@@ -53,17 +54,25 @@ class Game:
                     self.screen.blit(self.p1_chip, ((item * 85 + 200),(row * 85 + 95)))
                 elif self.board.state[row][item] == 2:
                     self.screen.blit(self.p2_chip, ((item * 85 + 200),(row * 85 + 95)))
- 
+
+    def print_winner(self, winner):
+        if winner == 1:
+            text = self.game_font.render('BLUE WINS!', True, (230, 210, 150))  
+            self.screen.blit(text, (100,230))
+        else:
+            text = self.game_font.render('RED WINS!', True, (230, 210, 150))  
+            self.screen.blit(text, (100,230))
+
     def main(self):
-        turn = 0
         self.build_slots()
-        while not self.board.check_winner():
+        while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
             self.build_chips()
             self.screen.fill(Game.BG)
+            win = self.board.check_winner()
             for s in self.slots:
                 s.draw()
             self.print_placed_chips()
@@ -72,6 +81,8 @@ class Game:
                 move = c.move(self.slots)
                 if move:
                     self.board.accept_move(move)
+            if win:
+                self.print_winner(win)
             pygame.display.update()
             self.clock.tick(120)
 
