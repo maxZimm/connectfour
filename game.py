@@ -57,10 +57,10 @@ class Game:
 
     def print_winner(self, winner):
         if winner == 1:
-            text = self.game_font.render('BLUE WINS!', True, (230, 210, 150))  
+            text = self.game_font.render('BLUE WINS!', True, (30, 10, 250))  
             self.screen.blit(text, (100,230))
         else:
-            text = self.game_font.render('RED WINS!', True, (230, 210, 150))  
+            text = self.game_font.render('RED WINS!', True, (250, 10, 30))  
             self.screen.blit(text, (100,230))
 
     def main(self):
